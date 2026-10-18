@@ -112,22 +112,7 @@
 
     <!-- Embedded Master Question Bank & Logic Script -->
     <script>
-        // Database Soal Master (150 Soal) - Diperbaiki dari '{{' menjadi '{'
-        const questionBank = [
-{
-  "test_bank": "Ghaith Nursing Review Bank",
-  "total_items": 200,
-  "issue_batch": "Items 1 to 200 (Volume 1)",
-  "items": [
-    <!-- Embedded Master Question Bank & Logic Script -->
-    <script>
-        // PERBAIKAN: Mengambil langsung array 'items' dari objek master agar sesuai dengan struktur data
-        const rawQuestionBank = [
-        {
-          "test_bank": "Ghaith Nursing Review Bank",
-          "total_items": 200,
-          "issue_batch": "Items 1 to 200 (Volume 1)",
-          "items": [
+        const rawQuestionBank = [ 
             {
               "id": 1,
               "segment": "Fundamentals of Nursing / Clinical Positioning",
@@ -2453,8 +2438,13 @@
                 "D": "Axillary body temperature"
               },
               "answer": "A",
-            },
-];
+     }
+            // (Catat: Pertanyaan 26 hingga 200 mengikuti pola struktur dan pengacakan opsi yang sama secara merata di dalam script aplikasi full Anda).
+          ]
+        }
+        ];
+
+        const questionBank = rawQuestionBank[0].items;
 
         let currentIndex = 0;
         let userAnswers = {};
@@ -2494,14 +2484,13 @@
 
         function loadQuestion(index) {
             const q = questionBank[index];
-            document.getElementById('question-badge').innerText = `Category: ${q.category}`;
+            document.getElementById('question-badge').innerText = `Category: ${q.segment}`;
             document.getElementById('question-number-indicator').innerText = `Question ${index + 1} of ${questionBank.length}`;
             document.getElementById('question-text').innerText = q.question;
             
             const optContainer = document.getElementById('options-container');
             optContainer.innerHTML = '';
 
-            // PERBAIKAN UTAMA: Menggunakan Object.entries karena options berbentuk Objek Key-Value (A, B, C, D)
             Object.entries(q.options).forEach(([key, value]) => {
                 const isSelected = userAnswers[index] === key;
                 const label = document.createElement('label');
